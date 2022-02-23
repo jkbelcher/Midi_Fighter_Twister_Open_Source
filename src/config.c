@@ -351,6 +351,7 @@ void load_config(void)
 	
 	// Load system settings
 	midi_system_channel = eeprom_read(EE_MIDI_CHANNEL);
+	encoder_settings_channel = 9;
 	
 	// Load side button settings
 	side_sw_settings_t side_sw_cfg;

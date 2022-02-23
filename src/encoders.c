@@ -1272,6 +1272,13 @@ void process_element_midi(uint8_t channel, uint8_t type, uint8_t number, uint8_t
 				}
 			}
 		} 
+	} else if (channel == encoder_settings_channel) {
+		// Adjust settings on encoder.  Match by encoder MIDI number.
+		for(uint8_t i=0;i<64;++i){
+			if(encoder_settings[i].encoder_midi_number == number){
+				process_encoder_setting_update(i, value);
+			}
+		}
 	} else {
 		// Otherwise the input is re mappable so scan through the input map for a match
 		for(uint8_t i=0;i<64;++i){
@@ -1505,6 +1512,25 @@ void process_encoder_animation_update(uint8_t idx, uint8_t value)	// !Summer2016
 void process_shift_update(uint8_t idx, uint8_t value)
 {
 	
+}
+
+void process_encoder_setting_update(uint8_t idx, uint8_t value)
+{
+	// Update encoder setting from MIDI command.
+	// Does not write to EEPROM.
+	if (value == 0 || value == 1) {
+		// Has Detent
+		encoder_settings[idx].has_detent = value;
+	} else if (value >=2 && value <= 4) {
+		// Indicator Type
+		if (value == 2) {
+			encoder_settings[idx].indicator_display_type = DOT;
+		} else if (value == 3) {
+			encoder_settings[idx].indicator_display_type = BAR;
+		} else if (value == 4) {
+			encoder_settings[idx].indicator_display_type = BLENDED_BAR;
+		}
+	}
 }
 
 /**

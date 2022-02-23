@@ -172,6 +172,7 @@
 		void process_sw_animation_update(uint8_t idx, uint8_t value);
 		void process_encoder_animation_update(uint8_t idx, uint8_t value);
 		void process_shift_update(uint8_t idx, uint8_t value);
+		void process_encoder_setting_update(uint8_t idx, uint8_t value);
 		
 		void run_shift_mode(uint8_t page);
 		
